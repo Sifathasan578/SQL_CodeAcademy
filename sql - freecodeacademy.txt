@@ -1,0 +1,363 @@
+#1. Introduction
+______________
+
+SQL is a language which is used to interact with relational database management system. 
+
+RDBMS is a software application which we use to create and manage different databases. 
+
+Install MySQL. One of the most popular database management systems for beginners.
+
+Writing SQL code, queries. Input information, retrieve info. 
+
+Fundamental then advance. Database Schema.
+Fundamentals, Database design, Schema Design.
+
+#2. What is Database?
+__________________
+
+Any collection of related information:
+Phone book, Shopping list, Todolist, ...
+
+Databases can be stored in different ways.
+On paper, in your mind, on a computer, this powerpoint, comments section, ...
+
+Computers + Databases = <3
+Storing a db/ a collection of related info on a computer is extremely useful.
+
+
+Amazon.com vs Shopping list
+...
+...
+...
+read on ppt from site.
+
+DBMS 
+A special software program that helps user create and maintain a database
+...
+...
+...
+
+Example: Amazon is interacting with dbms.
+
+
+CRUD
+Create
+Read
+Update
+Delete
+
+Any good dbms must have these
+
+Two types of db:
+
+Relational DB (SQL): Organize data into one or more tables: Each table has one or more columns, A unique key identifies each row.
+
+No-relational DB (noSQL): 
+Organize data is anything but a traditional table: key-value stores, documents (JSON, XML, etc), Graphs, Flexible tables
+
+
+...
+...
+...
+
+RDBMS: mySQL, Oracle, postgreSQL, mariaDB, etc. 
+
+SQL: Standardized language for interacting with RDBMS, ... ... ...
+Use SQL to store data
+
+NoSQL: Anything but a static table data
+mongoDB, dynamoDB, apache cassandra, firebase, etc...
+use other DT to store data
+
+
+Implementation Specific
+...
+
+Database Queries
+...
+...
+
+
+Wrap up:
+...
+...
+
+
+
+#3 Tables and Keys
+___________________
+
+columns, rows
+col: single attribute
+row: individual identity, 
+
+Student table
+...
+
+primary key: uniquely defines the row in a db
+
+id -> primary key
+
+
+User table
+...
+...
+email (pk), password, data_created, type
+
+
+Employee table
+emp_id (pk), first_name, last_name, birth_date, sex, salary
+
+types of pk:
+surragate key: has no mapping to anything to the real world. 
+
+natural key:
+random unique serial no, 
+emp_ssn [social security number] (pk), first_name, last_name, birth_date, sex, salary
+
+foreign_key:
+attribute that we can store on a database table that will link us to another database table. 
+
+
+it stores the primary key of  a row in another table. foreign key is a primary key of another table. 
+
+
+Employee
+emp_id (pk), first_name, last_name, birth_date, sex, salary, branch_id (FK), super_id (FK)
+
+Branch
+branch_id (PK), branch_name, mgr_id (FK)
+
+can have more than one FK
+
+Branch Supplier
+branch_id (PK), supplier_name (PK), supply_type
+
+Here PK consist of two columns which makes it a "composite key". Basically a key that needs two attributes...
+
+When two columns doesnt uniquely define each row only then it needs to be a composite to make it unique...
+
+
+Client 
+client_id(PK), client_name, branch_id(FK)
+
+Works_With
+emp_id (PK, CK), client_id (PK, CK), total_sales
+
+
+
+
+#4 SQL Basics
+__________________
+
+SQL stands for Structured Query Language
+is a language used for interacting with RDBMS
+
+not like your traditional programming language
+
+Popular SQL: Postgrees, MySQL, Oracle, Microsoft SQL Server, ...
+
+SQL -> Hybrid language
+... DQL, DDL, DCL, DML, ...
+
+Queries
+set of instructions given to RDBMS that tell the RDBMS what information you want it to retrive for you...
+- tons of data in db
+- often hidden in a complex schema
+- goal is to only get the data you need
+
+
+SELECT employee.name, employee.age
+FROM employee
+WHERE employee.salary > 30000
+
+
+
+
+#5. MySQL Windows Installation
+Install MySQL, PopSQL
+
+create database girrafe;
+
+#6. Creating Tables
+__________________
+
+
+Basic data types:
+
+INT - 
+DECIMAL (M, N)
+    M - total number of digits you are going to store in this dt, N: number of digits you want to store after the decimal point
+
+VARCHAR(100)
+string of text with length 100
+
+BLOB
+Binary Large Object, stores large data
+
+DATE
+YYYY-MM-DD
+
+TIMESTAMP
+YYYY-MM-DD HH:MM:SS
+
+
+Creating database table
+
+
+
+CREATE TABLE student (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(20), 
+    major VARCHAR(20)
+);
+
+OR
+
+CREATE TABLE student (
+    student_id INT,
+    name VARCHAR(20), 
+    major VARCHAR(20),
+    PRIMARY KEY(student_id)
+);
+
+// Showing the table
+DESCRIBE student;
+
+// Deleting
+DROP TABLE student;
+
+// Adding a new colulmn
+ALTER TABLE student ADD gpa DECIMAL(3, 2);
+
+// Drop a particular column
+ALTER TABLE student DROP COLUMN gpa;
+
+#7. Inserting Data
+___________________________________
+
+
+SELECT * FROM student;
+
+INSERT INTO student VALUES(1, "Jack", "Biology");
+
+INSERT INTO student VALUES(1, "Jack", "Biology");
+INSERT INTO student VALUES(2, "Kate", "Sociology");
+// Another way to inserting
+INSERT INTO student(student_id, name) VALUES(3, "Claire");
+
+
+SELECT * FROM student;
+
+
+IN popSQL, whichever line is selected that will run afterwords...
+
+#8. Constraints
+_________________________
+
+
+DROP TABLE student;
+
+
+CREATE TABLE student (
+    student_id INT,
+    name VARCHAR(20), 
+    major VARCHAR(20) DEFAULT 'undecided',
+    PRIMARY KEY(student_id)
+);
+
+// default value will enter
+INSERT INTO student(student_id, name) VALUES(1, "Jack");
+
+NOT NULL
+UNIQUE
+DEFAULT
+AUTO_INCREMENT
+
+// Auto_Increment
+CREATE TABLE student (
+    student_id INT AUTO_INCREMENT,
+    name VARCHAR(20), 
+    major VARCHAR(20),
+    PRIMARY KEY(student_id)
+);
+
+DESCRIBE student;
+
+INSERT INTO student(name, major) VALUES("Jack", "Biology");
+INSERT INTO student(name, major) VALUES("Kate", "Sociology");
+
+SELECT * FROM student;
+
+
+#9. Update && Delete 
+_______________________
+
+
+
+UPDATE student
+SET major = "CS"
+WHERE major = "Computer Science";
+
+
+UPDATE student
+SET major = "Biochemistry"
+WHERE major = "Che" OR major = "Bio";
+
+
+UPDATE student
+SET name = "Tom", major = "undecided"
+WHERE student_id = 1;
+
+
+DELETE FROM student
+WHERE student_id = 5
+
+DELETE FROM student
+WHERE name = "Tom" AND major = "undecided";
+
+
+
+#10. Basic Queries
+____________________________
+
+
+
+SELECT name
+FROM student;
+
+SELECT name, major
+FROM student;
+
+SELECT student.name, student.major
+FROM student;
+
+
+SELECT student.name, student.major
+FROM student
+ORDER BY name;
+
+
+SELECT student.name, student.major
+FROM student
+ORDER BY name DESC;
+
+
+SELECT student.name, student.major
+FROM student
+ORDER BY student_id DESC;
+
+
+SELECT *
+FROM student
+ORDER BY major, student_id;
+
+SELECT *
+FROM student
+ORDER BY major, student_id DESC;
+
+
+SELECT *
+FROM student
+ORDER BY student_id DESC
+LIMIT 2;
